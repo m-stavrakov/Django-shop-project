@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
+
+:root{
+    --title-font: "Libre Barcode 128 Text", system-ui;
+    --body-font: "Cactus Classical Serif", serif;
+}
+
+/* HEADER */
+
+.title{
+    font-family: var(--title-font) !important;
+    font-size: 40px;
+    color: black;
+}
+
+.navbar-nav{
+    font-family: var(--body-font);
+}
+
+.right_side_nav{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.custom-nav-item{
+    font-size: 1.5rem;
+}
+
+.nav-link{
+    color: black !important;
+}
+
+.profile-icon{
+    font-size: 1.5rem;
+}
+
+.custom-nav-link{
+    font-weight: 500;
+}
+
+.logout-btn{
+    border: none;
+    background: none;
+    width: 125%;
+    text-align: left;
+    padding: 0;
+}
+
+.logout-btn:hover{
+    font-weight: 600;
+}
+
+.dropdown-menu{
+    border: none;
+}
+
+.navbar-nav .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.navbar-nav .dropdown-menu {
+    margin-top: 0;
+}
+
+.dropdown-menu .dropdown-item:hover:not(:nth-child(5)){
+    background-color: aliceblue;
+    border: 1px solid rgb(197, 226, 250);
+    font-weight: 900;
+}
+
+.dropdown-menu .dropdown-item:hover:nth-child(5){
+    background-color: rgb(252, 200, 200);
+    border: 1px solid rgb(246, 148, 148);
+}
+
+/* HOME PAGE */
+
+.home_page-title{
+    font-family: var(--body-font);
+}
+
+.categories-list{
+    gap: 10px;
+}
+
+.category-link{
+    text-decoration: none !important;
+}
+
+.category-name{
+    color: black !important;
+}
