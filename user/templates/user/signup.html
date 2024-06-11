@@ -1,31 +1,25 @@
 {% extends "main/base.html" %}
-<!-- need to load the crispy file -->
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
-            <!-- preventing forgery, and the django form won't work without this line -->
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <fieldset class="form-group">
+            <fieldset class="form-group px-5">
                 <legend class="border-bottom mb-4">
                     Join Here
                 </legend>
-                <!-- now this will show the form and pipe it to crispy -->
-                {{ form|crispy }}
+                <div class="px-5 register_form">
+                    {{ form|crispy }}
+                </div>
             </fieldset>
-            <!-- this form is specified in the views.py specific for Users -->
-            <!-- {{ form.as_p }} -->
-            <div class="form-group">
-                <button class="btn btn-outline" type="submit">
+            <div class="form-group form-btn">
+                <button class="btn submit-btn" type="submit">
                     Sign Up
                 </button>
+                <small class="text-muted">
+                    Already have an account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                </small>
             </div>
         </form>
-
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Already have an account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
-            </small>
-        </div>
     </div>
 {% endblock content %}

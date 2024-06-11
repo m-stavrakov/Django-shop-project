@@ -31,7 +31,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="categories">
                         {% for category in categories %}
-                            <a class="dropdown-item" href="#">{{category.name}}</a>
+                            <a class="dropdown-item category-drop_menu" href="#">{{category.name}}</a>
                         {% endfor %}
                     </div>
                 </li>
@@ -39,24 +39,26 @@
                 <li class="nav-item custom-nav-item">
                   <a class="nav-link custom-nav-link" href="#">New Item</a>
                 </li>
-                <li class="nav-item custom-nav-item dropdown">
-                    <a class="nav-link custom-nav-link" href="#" id="profile-options" aria-haspopup="true" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i>
+                <li class="nav-item custom-nav-item dropdown profile_img-menu">
+                    <a class="nav-link custom-nav-link profile_img-icon" href="#" id="profile-options" aria-haspopup="true" aria-expanded="false">
+                        <div class="profile-img_container">
+                            <img src="{{ user.profile.profile_img.url }}" alt="profile picture" class="profile-img rounded-circle">
+                        </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item profile-drop_menu">
                             Profile
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item profile-drop_menu">
                             Dashboard
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item profile-drop_menu">
                             New Item
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item profile-drop_menu">
                             Inbox
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item profile-drop_menu">
                             <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
                                 <button class="logout-btn text-danger" type="submit">Logout</button>
@@ -69,7 +71,7 @@
                     <a class="nav-link custom-nav-link" href="{% url 'login' %}">Login</a>
                   </li>
                   <li class="nav-item custom-nav-item">
-                    <a class="nav-link custom-nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    <a class="nav-link custom-nav-link" href="{% url 'signup' %}">SignUp</a>
                   </li>
                 {% endif %}
               </ul>

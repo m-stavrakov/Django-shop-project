@@ -64,15 +64,34 @@
     margin-top: 0;
 }
 
-.dropdown-menu .dropdown-item:hover:not(:nth-child(5)){
+.dropdown-menu .category-drop_menu:hover{
     background-color: aliceblue;
     border: 1px solid rgb(197, 226, 250);
     font-weight: 900;
 }
 
-.dropdown-menu .dropdown-item:hover:nth-child(5){
+.dropdown-menu .profile-drop_menu:hover:not(:nth-child(5)){
+    background-color: aliceblue;
+    border: 1px solid rgb(197, 226, 250);
+    font-weight: 900;
+}
+
+.dropdown-menu .profile-drop_menu:hover:nth-child(5){
     background-color: rgb(252, 200, 200);
     border: 1px solid rgb(246, 148, 148);
+}
+
+.profile-img_container {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    overflow: hidden; 
+}
+
+.profile-img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
 }
 
 /* HOME PAGE */
@@ -91,4 +110,67 @@
 
 .category-name{
     color: black !important;
+}
+
+/* LOGIN, REGISTER, LOGOUT */
+
+.content-section{
+    font-family: var(--body-font);
+    padding-bottom: 50px;
+}
+
+.auth_inputs{
+    border: 1px solid rgb(197, 226, 250);
+    transition: all .4s ease-in-out;
+}
+
+.auth_inputs:focus{
+    border: none;
+    background-color: rgb(197, 226, 250);
+    outline: none;
+}
+
+.register_form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-btn{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.submit-btn{
+    font-size: 1.3rem;
+    transition: all .5s ease-in-out;
+}
+
+.submit-btn:hover{
+    color: rgb(137, 199, 249);
+    border-bottom: 1px solid rgb(137, 199, 249);
+}
+
+.asteriskField {
+    display: none;
+}
+
+.logout-title{
+    font-family: var(--body-font);
+}
+
+.logout-section{
+    padding: 20% 0 30% 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

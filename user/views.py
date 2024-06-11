@@ -1,21 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.models import User
 from .forms import SignupForm, UserUpdateForm,ProfileUpdateForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-
-            return redirect('/login/')
+            user = form.save()
+            profile_picture = form.cleaned_data.get('profile_picture')
+            if profile_picture:
+                profile = user.profile
+                profile.profile_img = profile_picture
+                profile.save()
+            
+            messages.success(request, f'Account created for {user.username}!')
+            login(request, user)
+            return redirect('main:home_page')
     else:
         form = SignupForm()
     
@@ -27,7 +32,7 @@ class CustomLoginView(LoginView):
     template_name = 'user/login.html'
     authentication_form = LoginForm
 
-    def valid_form(self, form):
+    def form_valid(self, form):
         user = form.get_user()
         messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
         return super().form_valid(form)

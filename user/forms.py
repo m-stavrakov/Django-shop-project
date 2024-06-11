@@ -5,14 +5,22 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from .models import Profile
 
-def custom_char_field(placeholder):
-    return forms.CharField(widget=forms.TextInput(attrs={
+def custom_char_field(placeholder, input_type='text', **kwargs):
+    attrs = {
         'placeholder': placeholder,
-        'class': ''
-    }))
+        'class': 'auth_inputs',
+    }
+    attrs.update(kwargs)
+    
+    widget = forms.TextInput(attrs=attrs)
+    if input_type == 'password':
+        widget = forms.PasswordInput(attrs=attrs)
+    
+    return forms.CharField(widget=widget)
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField()
+    profile_picture = forms.ImageField(required=False, label='Profile Picture')
 
     class Meta:
         model = User
@@ -23,14 +31,20 @@ class SignupForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'profile_picture',
         )
 
     first_name = custom_char_field('Your First Name')
     last_name = custom_char_field('Your Last Name')
     username = custom_char_field('Your username')
     email = custom_char_field('Your email address')
-    password1 = custom_char_field('Your password')
-    password2 = custom_char_field('Confirm password')
+    password1 = custom_char_field('Your password', input_type='password', id='password1')
+    password2 = custom_char_field('Confirm password', input_type='password', id='password2')
+
+    def __init__(self, *args, **kwargs):
+        super(SignupForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.pop('autofocus', None)
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -51,7 +65,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class LoginForm(AuthenticationForm):
     username = custom_char_field('Your username')
-    password = custom_char_field('Your password')
+    password = custom_char_field('Your password', input_type='password', id='password_login')
 
     # Allowing user to log in with either username or email
     def clean(self):
