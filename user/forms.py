@@ -20,7 +20,11 @@ def custom_char_field(placeholder, input_type='text', **kwargs):
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField()
-    profile_picture = forms.ImageField(required=False, label='Profile Picture')
+    profile_picture = forms.ImageField(required=False, label='Profile Picture', widget=forms.ClearableFileInput(
+        attrs={
+            'class': 'sign_up-img'
+        }
+    ))
 
     class Meta:
         model = User
@@ -62,6 +66,10 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_img']
+    
+    def __init__(self, *args, **kwargs):
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['profile_img'].widget.attrs.update({'class': 'sign_up-img'})
 
 class LoginForm(AuthenticationForm):
     username = custom_char_field('Your username')

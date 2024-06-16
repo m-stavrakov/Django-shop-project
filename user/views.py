@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from .forms import SignupForm, UserUpdateForm,ProfileUpdateForm, LoginForm
+from item.models import Category, Item
+from django.contrib.auth.models import User
+from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 
@@ -38,7 +41,24 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
 
 @login_required
-def profile(request):
+def profile(request, username):
+    user = request.user
+    user_profile = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user_profile)
+    profile_image = user.profile.profile_img.url
+    user_items = Item.objects.filter(created_by=user, is_sold=False)[:6]
+    categories = Category.objects.all()
+
+    return render(request, 'user/profile.html', {
+        'profile_image': profile_image,
+        'user_item': user_items,
+        'categories': categories,
+        'current_user': user,
+        'profile': profile,
+    })
+
+@login_required
+def profile_update(request):
     # Handling profile updates
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
@@ -50,7 +70,7 @@ def profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
+            return redirect('profile', username=request.user.username)
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
@@ -60,4 +80,4 @@ def profile(request):
         'profile_form': profile_form,
     }
 
-    return render(request, 'user/profile.html', context)
+    return render(request, 'user/profile_update.html', context)

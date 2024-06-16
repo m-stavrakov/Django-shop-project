@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from item.models import Category, Item
-from user.models import Profile
 
 # Create your views here.
 
@@ -12,4 +11,5 @@ def home_page(request):
     return render(request, 'main/home_page.html', {
         'items': items,
         'categories': categories,
+        'user': request.user,
     })

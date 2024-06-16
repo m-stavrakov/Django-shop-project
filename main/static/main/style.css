@@ -174,3 +174,107 @@
     align-items: center;
     justify-content: center;
 }
+
+.sign_up-img{
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.sign_up-img::file-selector-button{
+    background-color: white;
+    color: #777777;
+    border: 2px solid rgb(137, 199, 249);
+    cursor: pointer;
+    transition: all ease-in-out 0.4s;
+}
+
+.sign_up-img::file-selector-button:hover{
+    background-color: rgb(137, 199, 249);
+    color: white;
+}
+
+/* PROFILE */
+.profile-container{
+    margin-bottom: 60px;
+}
+
+.profile{
+    display: flex;
+    gap: 2%;
+    width: 100%;
+    max-width: 100%;
+}
+
+.profile-image{
+    width: 10%;
+    height: 10%;
+    object-fit: cover;
+}
+
+.custom-img-class{
+    border-radius: 10%;
+}
+
+.profile-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+    gap: 20%;
+}
+
+.profile-details{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-details p,
+.profile-edit p{
+    margin: 0;
+}
+
+.profile-details_small small{
+    cursor: pointer;
+    color: #777777;
+    transition: all ease-in-out 0.4s;
+}
+
+.profile-details_small small:hover{
+    text-decoration: underline;
+    color: black;
+}
+
+.profile-names{
+    font-family: var(--body-font);
+    font-size: 1.6rem;
+}
+
+.profile-edit{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-edit button{
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.profile-inbox{
+    font-size: 1.5rem;
+}
+
+.profile-edit button:hover{
+    background-color: #e0a800;
+    color: white;
+}
+
+.profile-edit_link{
+    color: black;
+}
+
+.profile-edit_link:hover{
+    text-decoration: none;
+    color: white;
+}

@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <div class="container profile-container">
+        <div class="profile">
+            <img src="{{ profile_image }}" alt="profile image" class="profile-image {% if profile.profile_img.name == 'media/default.png' %}default-img-class{% else %}custom-img-class{% endif %}">
+            <div class="profile-info">
+                <div class="profile-details">
+                    <p class="profile-names">{{ user.first_name }} {{ user.last_name }}</p>
+                    <div class="profile-details_small">
+                        <p>
+                            <small>{{ user.username }}</small> / <small>{{ user.email }}</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-edit">
+                    {% if profile.user == current_user %}
+                        <p class="profile-inbox"><i class="bi bi-inbox"></i></p>
+                        <button class="profile-edit_btn btn">
+                            <a href="{% url 'profile_update' %}" class="profile-edit_link">
+                                Edit Profile
+                            </a>
+                        </button>
+                    {% else %}
+                        <button>
+                            <a href="#">
+                                Message
+                            </a>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h3 class="home_page-title">
+            Your Items
+        </h3>
+    </div>
+
+    <!-- {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %} -->
+{% endblock content %}
