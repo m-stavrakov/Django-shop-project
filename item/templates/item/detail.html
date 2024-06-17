@@ -1,0 +1,89 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    {{ item.name }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row g-4">
+        <div class="col-md-7">
+            <img src="{{ item.image.url }}" alt="item image" class="img-fluid rounded">
+        </div>
+
+        <div class="col-md-5 p-4 bg-light rounded">
+            <h1 class="mb-4">
+                {{ item.name }}
+            </h1>
+            <p class="text-muted">
+                <strong>
+                    Price: 
+                </strong>
+                {{ item.price }}
+            </p>
+
+            <p class="text-muted">
+                <strong>
+                    Seller: 
+                </strong>
+                {{ item.created_by.username }}
+            </p>
+
+            {% if item.description %}
+            <p class="text-body">
+                <strong class="text-muted">
+                    Description: 
+                </strong>
+                {{ item.description }}
+            </p>
+            {% endif %}
+
+            {% if request.user == item.created_by %}
+                <div class="mt-4 p-4 bg-white rounded">
+                    <p>This is your item</p>
+
+                    <a href="{% url 'item:edit' item.id %}" 
+                        class="btn btn-primary mt-2"
+                    >
+                        Edit
+                    </a>
+
+                    <a href="{% url 'item:delete' item.id %}" 
+                        class="btn btn-danger mt-2"
+                    >
+                        Delete
+                    </a>
+                </div>
+            {% else %}
+                <a href="#" 
+                class="btn btn-success mt-4">
+                Contact seller
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mt-4 p-4 bg-light rounded">
+        <h2 class="mb-4 text-center">
+            Related Items
+        </h2>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in related_items %}
+                <div class="col">
+                    <a href="{% url 'item:detail' item.id %}" class="text-decoration-none">
+                        <div class="card h-100">
+                            <img src="{{ item.image.url }}" alt="item image" class="card-img-top rounded-top">
+                            <div class="card-body bg-white rounded-bottom">
+                                <h2 class="card-title h5">
+                                    {{ item.name }}
+                                </h2>
+                                <p class="card-text text-muted">
+                                    Price: {{ item.price }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

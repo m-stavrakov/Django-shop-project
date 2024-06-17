@@ -1,0 +1,77 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    Items
+{% endblock title %}
+
+{% block content %}
+    <div class="pb-4 row bg-light">
+        <div class="col-3">
+            <form action="{% url 'item:items_search' %}" method="get" class="mb-4">
+                <input 
+                    name="query" 
+                    class="form-control mb-2" 
+                    type="text" 
+                    value="{{ query }}"
+                    placeholder="Find a bike, a chair or a car">
+
+                <button class="btn btn-info w-100">
+                    Search
+                </button>
+            </form>
+
+            <hr class="my-4">
+
+            <p class="fw-semibold">
+                Categories
+            </p>
+
+            <ul class="list-group mb-4">
+                {% for category in categories %}
+                <li class="list-group-item{% if category.id == category_id %} bg-light {% endif %}">
+                    <a href="{% url 'item:items_search' %}?query={{ query }}&category={{ category.id }}">
+                        {{ category.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <hr class="my-4">
+
+            <p class="fw-semibold">
+                Clear filters
+            </p>
+
+            <ul>
+                <li>
+                    <a href="{% url 'item:items_search' %}" 
+                        class="btn btn-warning w-100">
+                        Clear
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-9">
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                {% for item in items %}
+                    <div class="col">
+                        <a href="{% url 'item:detail' item.id %}">
+                            <div class="card">
+                                <img src="{{ item.image.url }}" alt="item image" class="card-img-top">
+                                <div class="card-body">
+                                    <h2 class="card-title h5">
+                                        {{ item.name }}
+                                    </h2>
+                                    <p class="card-text text-muted">
+                                        Price: {{ item.price }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

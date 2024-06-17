@@ -28,7 +28,6 @@ class Item(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField(blank=True, null=True)
     price = models.FloatField()
-    slug = models.SlugField(max_length=250, unique=True, blank=True)
     stock = models.PositiveIntegerField(default=0)
     discount = models.FloatField(default=0.0)
     sizes = models.CharField(max_length=3, choices=SIZE_CHOICES, default='sm')
@@ -48,11 +47,11 @@ class Item(models.Model):
     def __str__(self):
         return f"{self.name} ({self.category.name})"   
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-        self.resize_image()
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = slugify(self.name)
+    #     super().save(*args, **kwargs)
+    #     self.resize_image()
 
     def resize_image(self):
         if self.image:

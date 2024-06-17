@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'main.apps.UsersConfig',
     'item.apps.ItemConfig',
     'user.apps.UserConfig',
+    'dashboard.apps.DashboardConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'bootstrap5', 
