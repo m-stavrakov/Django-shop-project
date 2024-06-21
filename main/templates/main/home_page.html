@@ -4,53 +4,82 @@
 {% endblock title %}    
 
 {% block content%}
-    <div class="container-fluid border my-4">
+    <div class="container-fluid my-4">
         <h3 class="home_page-title">
             Newest Items
         </h3>
 
-        <div class="">
-            {% for item in items %}
-                <div>
-                    <a href="{% url 'item:detail' item.id %}">
-                        <div>
-                            <img src="{{ item.image.url }}" alt="item image" class="">
+        <div class="container">
+            <div class="row items-display_container justify-content-center">
+                {% if items|length == 1 %}
+                    <div class="col-md-6 d-flex justify-content-center mb-4">
+                        <a href="{% url 'item:detail' items.0.id %}" class="item-box text-center">
+                            <div class="image-container">
+                                <img src="{{ items.0.image.url }}" alt="item image" class="item-image_home img-fluid">
+                            </div>
+        
+                            <div class="item-description mt-2">
+                                <h2 class="item-name">
+                                    {{ items.0.name }}
+                                </h2>
+                                <p class="item-price">
+                                    Price: £{{ items.0.price }}
+                                </p>
+                                <p class="item-price">
+                                    By: {{ items.0.created_by }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                {% else %}
+                    {% for item in items %}
+                        <div class="col-md-6 d-flex justify-content-center mb-4">
+                            <a href="{% url 'item:detail' item.id %}" class="item-box text-center">
+                                <div class="image-container">
+                                    <img src="{{ item.image.url }}" alt="item image" class="item-image_home img-fluid">
+                                </div>
+        
+                                <div class="item-description mt-2">
+                                    <h2 class="item-name">
+                                        {{ item.name }}
+                                    </h2>
+                                    <p class="item-price">
+                                        Price: £{{ item.price }}
+                                    </p>
+                                    <p class="item-price">
+                                        By: {{ item.created_by }}
+                                    </p>
+                                </div>
+                            </a>
                         </div>
-
-                        <div class="">
-                            <h2 class="">
-                                {{ item.name }}
-                            </h2>
-                            <p class="">
-                                Price: {{ item.price }}
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 
-    <div class="container-fluid border my-4 ">
-        <h3 class="home_page-title">
-            Categories
-        </h3>
-
-        <div class="d-flex justify-content-between align-items-center px-4 py-4 categories-list">
-            {% for category in categories %}
-                <div>
-                    <a href="#" class="category-link">
-                        <div class="d-flex flex-column align-items-center">
-                            <h4 class="category-name">
-                                {{ category.name }}
-                            </h4>
-                            <p class="category-count text-muted">
-                                {{ category.items.count }} items
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+    <div class="home-categories">
+        <div class="container-fluid border categories-container">
+            <h3 class="home_page-title">
+                Categories
+            </h3>
+    
+            <div class="d-flex justify-content-between align-items-center px-4 py-4 categories-list">
+                {% for category in categories %}
+                    <div>
+                        <a href="{% url 'item:category-items' category.id %}" class="category-link">
+                            <div class="d-flex flex-column align-items-center">
+                                <h4 class="category-name">
+                                    {{ category.name }}
+                                </h4>
+                                <p class="category-count text-muted">
+                                    {{ category.items.count }} items
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

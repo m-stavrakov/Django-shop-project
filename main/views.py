@@ -4,7 +4,7 @@ from item.models import Category, Item
 # Create your views here.
 
 def home_page(request):
-    items = Item.objects.filter(is_sold=False) [0:6]
+    items = Item.objects.filter(is_sold=False).order_by('-created_at') [0:6]
     categories = Category.objects.all()
 
 

@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+    Categories
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container mt-6 p-4 rounded">
+        <h2 class="mb-4 text-center">
+            {{ category.name }}
+        </h2>
+    
+
+        {% if items %}
+
+            <div class="container">
+                <div class="row items-display_container justify-content-center">
+                    {% if items|length == 1 %}
+
+                        <div class="col-md-6 d-flex justify-content-center mb-4">
+                            <a href="{% url 'item:detail' items.0.id %}" class="item-box text-center">
+                                <div class="image-container">
+                                    <img src="{{ items.0.image.url }}" alt="item image" class="item-image_home img-fluid">
+                                </div>
+            
+                                <div class="item-description mt-2">
+                                    <h2 class="item-name">
+                                        {{ items.0.name }}
+                                    </h2>
+                                    <p class="item-price">
+                                        Price: £{{ items.0.price }}
+                                    </p>
+                                    <p class="item-price">
+                                        By: {{ items.0.created_by }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                    {% else %}
+
+                        {% for item in items %}
+
+                            <div class="col-md-6 d-flex justify-content-center mb-4">
+                                <a href="{% url 'item:detail' item.id %}" class="item-box text-center">
+                                    <div class="image-container">
+                                        <img src="{{ item.image.url }}" alt="item image" class="item-image_home img-fluid">
+                                    </div>
+            
+                                    <div class="item-description mt-2">
+                                        <h2 class="item-name">
+                                            {{ item.name }}
+                                        </h2>
+                                        <p class="item-price">
+                                            Price: £{{ item.price }}
+                                        </p>
+                                        <p class="item-price">
+                                            By: {{ item.created_by }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+                </div>
+            </div>
+            
+        {% else %}
+
+            <h3 class="mb-4 text-center">
+                No Items
+            </h3>
+
+        {% endif %}
+    </div>
+
+{% endblock content %}

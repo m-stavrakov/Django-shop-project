@@ -15,8 +15,7 @@
 <body>
 
     <header class="site-header">
-        <!-- add fixed top to nav -->
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-custom">
             <a class="navbar-brand title" href="{% url 'main:home_page' %}">ShopWorld</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -32,16 +31,16 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="categories">
                         {% for category in categories %}
-                            <a class="dropdown-item category-drop_menu" href="#">{{category.name}}</a>
+                            <a class="dropdown-item category-drop_menu" href="{% url 'item:category-items' category.id %}">{{category.name}}</a>
                         {% endfor %}
                     </div>
                 </li>
-                {% if user.is_authenticated %}
                 <li class="nav-item custom-nav-item">
-                  <a class="nav-link custom-nav-link" href="{% url 'item:items_search' %}">Brows</a>
+                  <a class="nav-link custom-nav-link" href="{% url 'item:items_search' %}">Search</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item custom-nav-item dropdown profile_img-menu">
-                    <a class="nav-link custom-nav-link profile_img-icon" href="#" id="profile-options" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link custom-nav-link profile_img-icon" href="{% url 'profile' user.username %}" id="profile-options" aria-haspopup="true" aria-expanded="false">
                         <div class="profile-img_container">
                             <img src="{{ user.profile.profile_img.url }}" alt="profile picture" class="profile-img rounded-circle">
                         </div>
@@ -80,7 +79,7 @@
           </nav>
     </header>
 
-    <div>
+    <div class="content">
       {% block content %}
       {% endblock content %}
     </div>
