@@ -74,7 +74,7 @@
                         </a>
                     </div>
                 {% else %}
-                    <a href="#" 
+                    <a href="{% url 'communication:new_conversation' item.id %}" 
                     class="btn mt-4 item-contact_btn">
                     Contact seller
                     </a>
