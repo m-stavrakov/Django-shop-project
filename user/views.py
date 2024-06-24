@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.views.generic import DetailView
 import logging
+from django.urls import reverse_lazy
 
 # Create your views here.
 def signup(request):
@@ -40,20 +41,39 @@ class CustomLoginView(LoginView):
     authentication_form = LoginForm
 
     # changes
-    def form_invalid(self, form):
-        logger.error('Login form invalid: %s', form.errors)
-        return super().form_invalid(form)
-    
     def form_valid(self, form):
         try:
+            response = super().form_valid(form)
+            
             user = form.get_user()
+            logger.info('User %s successfully logged in.', user.username)
             messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
-            return super().form_valid(form)
+            
+            return response
+        
         except Exception as e:
             logger.error('Error during form validation: %s', str(e))
             messages.error(self.request, 'An unexpected error occurred. Please try again later.')
             return self.form_invalid(form)
 
+    def get_success_url(self):
+        # Redirect to a specific URL after login
+        return reverse_lazy('main:home_page')
+    # def form_invalid(self, form):
+    #     logger.error('Login form invalid: %s', form.errors)
+    #     return super().form_invalid(form)
+    
+    # def form_valid(self, form):
+    #     try:
+    #         user = form.get_user()
+    #         messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
+    #         return super().form_valid(form)
+    #     except Exception as e:
+    #         logger.error('Error during form validation: %s', str(e))
+    #         messages.error(self.request, 'An unexpected error occurred. Please try again later.')
+    #         return self.form_invalid(form)
+
+    # mine
     # def form_valid(self, form):
     #     user = form.get_user()
     #     messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
