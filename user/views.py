@@ -59,25 +59,6 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         # Redirect to a specific URL after login
         return reverse_lazy('main:home_page')
-    # def form_invalid(self, form):
-    #     logger.error('Login form invalid: %s', form.errors)
-    #     return super().form_invalid(form)
-    
-    # def form_valid(self, form):
-    #     try:
-    #         user = form.get_user()
-    #         messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
-    #         return super().form_valid(form)
-    #     except Exception as e:
-    #         logger.error('Error during form validation: %s', str(e))
-    #         messages.error(self.request, 'An unexpected error occurred. Please try again later.')
-    #         return self.form_invalid(form)
-
-    # mine
-    # def form_valid(self, form):
-    #     user = form.get_user()
-    #     messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
-    #     return super().form_valid(form)
 
 @login_required
 def profile(request, username):

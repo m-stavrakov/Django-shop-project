@@ -32,7 +32,7 @@ class LoginViewTest(TestCase):
             'username': 'wronguser',
             'password': 'wrongpassword'
         })
-        self.assertEqual(response.status_code, 200)  # Assuming it redirects back to login page with errors
+        self.assertEqual(response.status_code, 200)  
         self.assertContains(response, 'Invalid username/email or password')
 
     def test_login_error_logging(self):
