@@ -93,7 +93,13 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # DATABASES = {"default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}  # Loads connection string from DATABASE_URL
-database_url = os.environ.get('DATABASE_URL')
+environment = os.environ.get('ENVIRONMENT', 'development')
+
+if environment == 'production':
+    database_url = os.environ.get('DATABASE_URL')
+else:
+    database_url = os.environ.get('DATABASE_URL_LOCAL')
+
 DATABASES = {
     'default': dj_database_url.parse(database_url)
 }
@@ -161,6 +167,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+# added
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 LOGGING={

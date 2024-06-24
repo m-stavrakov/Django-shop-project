@@ -8,6 +8,7 @@ from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.views.generic import DetailView
+import logging
 
 # Create your views here.
 def signup(request):
@@ -32,14 +33,31 @@ def signup(request):
         'form': form,
     })
 
+# changes
+logger = logging.getLogger(__name__)
 class CustomLoginView(LoginView):
     template_name = 'user/login.html'
     authentication_form = LoginForm
 
+    # changes
+    def form_invalid(self, form):
+        logger.error('Login form invalid: %s', form.errors)
+        return super().form_invalid(form)
+    
     def form_valid(self, form):
-        user = form.get_user()
-        messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
-        return super().form_valid(form)
+        try:
+            user = form.get_user()
+            messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
+            return super().form_valid(form)
+        except Exception as e:
+            logger.error('Error during form validation: %s', str(e))
+            messages.error(self.request, 'An unexpected error occurred. Please try again later.')
+            return self.form_invalid(form)
+
+    # def form_valid(self, form):
+    #     user = form.get_user()
+    #     messages.success(self.request, f'Welcome {user.first_name}! You have successfully logged in!')
+    #     return super().form_valid(form)
 
 @login_required
 def profile(request, username):

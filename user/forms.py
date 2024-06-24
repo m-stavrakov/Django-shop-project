@@ -110,3 +110,4 @@ class LoginForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
             
         return self.cleaned_data
+    
