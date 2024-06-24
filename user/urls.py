@@ -11,4 +11,5 @@ urlpatterns = [
     path('profile/<str:username>/', UserProfileView.as_view(), name='user_profile'),
     path('profile_update/', user_views.profile_update, name='profile_update'),
     path('signup/', user_views.signup, name='signup'),
+    path('login/', user_views.CustomLoginView.as_view(template_name='user/login.html'), name='login'),
 ]
