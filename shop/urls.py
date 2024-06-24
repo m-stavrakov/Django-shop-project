@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from user import views as user_views
 
 # for showing images
 from django.conf import settings
@@ -24,10 +26,23 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
-    path('profile/', include('user.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('inbox/', include('communication.urls')),
     path('items/', include('item.urls')),
-    path('dashboard/', include('dashboard.urls')),
+    path('login/', user_views.CustomLoginView.as_view(template_name='user/login.html'), name='login'),
+    path('profile/', include('user.urls')),
+    path('password_reset/', auth_views.PasswordResetView.as_view(
+        template_name='user/password_reset.html'
+        ), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(
+        template_name='user/password_reset_done.html'
+        ), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name='user/password_reset_confirm.html'
+        ),name='password_reset_confirm'),
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
+        template_name='user/password_reset_complete.html'
+        ), name='password_reset_complete'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

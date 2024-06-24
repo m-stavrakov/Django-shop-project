@@ -29,6 +29,9 @@
                 <button class="btn search-btn" type="submit">
                     Login
                 </button>
+                <small class="text-muted ml-2"> 
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                </small>
                 <small class="text-muted">
                     Don't have an account? <a href="{% url 'user:signup' %}" class="ml-2">Sign Up</a>
                 </small>
