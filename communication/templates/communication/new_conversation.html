@@ -6,30 +6,31 @@
 
 {% block content %}
 
-    <h1 class="mb-6 text-3xl">
-        New Conversation
-    </h1>
+    <div class="container-fluid my-4">
+        <h1 class="home_page-title message-title">
+            New Conversation
+        </h1>
 
-    <form action="." method="post">
-        {% csrf_token %}
 
-        <div class="space-y-4">
-            {{ form.as_p }}
-        </div>
-
-        {% if form.errors or form.non_field_errors %}
-                <div class="mb-3 p-6 bg-red-100 rounded-xl">
-                    {% for field in form %}
-                        {{ field.errors }}
-                    {% endfor %}
-
-                    {{ form.non_field_errors }}
-
+    
+        <div class="content-section">
+            <form action="." method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+        
+                <div class="space-y-4 message_form">
+                    <p class="message_info">
+                        Message <span>@{{ item.created_by }}</span> about <span>{{ item.name }}</span>
+                    </p>
+                    {{ form.as_p }}
                 </div>
-        {% endif %}
+        
+                <div class="form-group form-btn">
+                    <button class="btn send-btn" type="submit">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white" type="submit">
-            Send
-        </button>
-    </form>
 {% endblock content %}

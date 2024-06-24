@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="pb-4 row search-container">
-            <div class="col-3 search-left_sidebar">
+            <div class="col-12 col-md-3 order-1 order-md-1 mb-4">
                 <form action="{% url 'item:items_search' %}" method="get" class="mb-4 search-form">
                     <input 
                         name="query" 
@@ -49,33 +49,35 @@
                         Clear
                     </button>
                 </a>
+
+                <hr class="my-4">
                 
             </div>
     
-            <div class="col-9">
-                <div class="row row-cols-1 row-cols-md-3 g-3">
-                    {% for item in items %}
-                    <div class="col-md-6 d-flex justify-content-center mb-4">
-                        <a href="{% url 'item:detail' item.id %}" class="item-box text-center">
-                            <div class="image-container">
-                                <img src="{{ item.image.url }}" alt="item image" class="item-image_home img-fluid">
-                            </div>
-    
-                            <div class="item-description mt-2">
-                                <h2 class="item-name">
-                                    {{ item.name }}
-                                </h2>
-                                <p class="item-price">
-                                    Price: £{{ item.price }}
-                                </p>
-                                <p class="item-price">
-                                    By: {{ item.created_by }}
-                                </p>
-                            </div>
-                        </a>
+            <div class="col-12 col-md-9 order-2 order-md-2">
+                    <div class="row row-cols-1 row-cols-md-3 g-3">
+                        {% for item in items %}
+                        <div class="col-md-6 d-flex justify-content-center mb-4">
+                            <a href="{% url 'item:detail' item.id %}" class="item-box text-center">
+                                <div class="image-container">
+                                    <img src="{{ item.image.url }}" alt="item image" class="item-image_home img-fluid">
+                                </div>
+        
+                                <div class="item-description mt-2">
+                                    <h2 class="item-name">
+                                        {{ item.name }}
+                                    </h2>
+                                    <p class="item-price">
+                                        Price: £{{ item.price }}
+                                    </p>
+                                    <p class="item-price">
+                                        By: {{ item.created_by }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
             </div>
         </div>
     </div>

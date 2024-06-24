@@ -9,6 +9,7 @@ class ConversationMessageForm(forms.ModelForm):
         )
         widgets = {
             'content': forms.Textarea(attrs={
-                'class': ''
+                'class': 'message-input',
+                'placeholder': 'Your Message'
             })
         }

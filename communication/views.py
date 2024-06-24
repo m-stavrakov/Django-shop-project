@@ -38,7 +38,8 @@ def new_conversation(request, item_pk):
         form = ConversationMessageForm()
         
         return render(request, 'communication/new_conversation.html', {
-            'form': form
+            'form': form,
+            'item': item
         })
     
 @login_required
@@ -46,12 +47,13 @@ def inbox(request):
     conversations = Conversation.objects.filter(members__in=[request.user.id])
 
     return render(request, 'communication/inbox.html', {
-        'conversation': conversations
+        'conversations': conversations
     })
     
 @login_required
 def detail(request, pk):
-    conversation = Conversation.objects.filter(members__in=[request.user.id]).get(pk=pk)
+    # conversation = Conversation.objects.filter(members__in=[request.user.id]).get(pk=pk)
+    conversation = get_object_or_404(Conversation, pk=pk, members__in=[request.user.id])
 
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)
@@ -66,8 +68,8 @@ def detail(request, pk):
 
             return redirect('communication:detail', pk=pk)
         
-        else:
-            form = ConversationMessageForm()
+    else:
+        form = ConversationMessageForm()
 
         return render(request, 'communication/conversation_detail.html', {
             'conversation': conversation,

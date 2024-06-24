@@ -64,15 +64,15 @@
                 Categories
             </h3>
     
-            <div class="d-flex justify-content-between align-items-center px-4 py-4 categories-list">
+            <div class="px-4 py-4 categories-list">
                 {% for category in categories %}
-                    <div>
+                    <div class="mb-4">
                         <a href="{% url 'item:category-items' category.id %}" class="category-link">
-                            <div class="d-flex flex-column align-items-center">
+                            <div class="categories-block">
                                 <h4 class="category-name">
                                     {{ category.name }}
                                 </h4>
-                                <p class="category-count text-muted">
+                                <p class="category-count text-muted mb-0">
                                     {{ category.items.count }} items
                                 </p>
                             </div>

@@ -5,25 +5,21 @@
             <img src="{{ profile_image }}" alt="profile image" class="profile-image {% if profile.profile_img.name == 'media/default.png' %}default-img-class{% else %}custom-img-class{% endif %}">
             <div class="profile-info">
                 <div class="profile-details">
-                    <p class="profile-names">{{ user.first_name }} {{ user.last_name }}</p>
+                    <p class="profile-names">{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
                     <div class="profile-details_small">
                         <p>
-                            <small>{{ user.username }}</small> / <small>{{ user.email }}</small>
+                            <small>{{ user_profile.username }}</small> / <small>{{ user_profile.email }}</small>
                         </p>
                     </div>
                 </div>
                 <div class="profile-edit">
                     {% if profile.user == current_user %}
-                        <p class="profile-inbox"><i class="bi bi-inbox"></i></p>
+                        <a href="{% url 'communication:inbox' %}" class="profile-inbox">
+                            <i class="bi bi-inbox"></i>
+                        </a>
                         <button class="btn">
-                            <a href="{% url 'profile_update' %}" class="profile-edit_link">
+                            <a href="{% url 'user:profile_update' %}" class="profile-edit_link">
                                 Edit Profile
-                            </a>
-                        </button>
-                    {% else %}
-                        <button>
-                            <a href="#">
-                                Message
                             </a>
                         </button>
                     {% endif %}
@@ -32,19 +28,43 @@
         </div>
     </div>
     
-    <div class="container">
+    <div class="container bg-light rounded p-2">
+        {% if profile.user == current_user %}
+            <h3 class="home_page-title">
+                Your Items
+            </h3>
+        {% else %}
         <h3 class="home_page-title">
-            Your Items
+            {{ user_profile.first_name }}'s Items
         </h3>
-    </div>
+        {% endif %}
 
-    <!-- {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %} -->
+<div class="d-flex justify-content-center">
+        <div class="col-9">
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                {% for item in user_items %}
+                <div class="col-md-6 d-flex justify-content-center mb-4">
+                    <a href="{% url 'item:detail' item.id %}" class="item-box text-center">
+                        <div class="image-container">
+                            <img src="{{ item.image.url }}" alt="item image" class="item-image_home img-fluid">
+                        </div>
+
+                        <div class="item-description mt-2">
+                            <h2 class="item-name">
+                                {{ item.name }}
+                            </h2>
+                            <p class="item-price">
+                                Price: £{{ item.price }}
+                            </p>
+                            <p class="item-price">
+                                By: {{ item.created_by }}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock content %}

@@ -9,7 +9,20 @@
                     Join Here
                 </legend>
                 <div class="px-5 register_form">
-                    {{ form|crispy }}
+                    {% for field in form %}
+                    {% if field.name == 'password1' or field.name == 'password2' %}
+                    <div class="input-group mb-3 input-fileds">
+                        {{ field|as_crispy_field }}
+                        <div class="input-group-append show-container">
+                            <span class="input-group-text password-toggle">
+                                <small class="showPasswordToggle">Show</small>
+                            </span>
+                        </div>
+                    </div>
+                    {% else %}
+                        {{ field|as_crispy_field }}
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </fieldset>
             <div class="form-group form-btn">
@@ -17,7 +30,7 @@
                     Sign Up
                 </button>
                 <small class="text-muted">
-                    Already have an account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                    Already have an account? <a href="{% url 'user:login' %}" class="ml-2">Sign In</a>
                 </small>
             </div>
         </form>

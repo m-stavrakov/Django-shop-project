@@ -7,78 +7,88 @@
 {% block content %}
     <div class="container item-details_container">
         <div class="row g-4">
-            <div class="col-md-7">
-                <img src="{{ item.image.url }}" alt="item image" class="img-fluid rounded img-details">
-            </div>
+            <div class="inner-container_details">
+                <div class="col-md-6">
+                    <img src="{{ item.image.url }}" alt="item image" class="img-fluid rounded img-details">
+                </div>
+        
+                <div class="col-md-4 p-4 rounded details-container">
+                    <h1 class="mb-4">
+                        {{ item.name }}
+                    </h1>
+                    <p>
+                        <strong class="text-muted">
+                            Price: 
+                        </strong> <br>
+                        £{{ item.price }}
+                        <br>
+                        {% if item.discount %}
     
-            <div class="col-md-5 p-4 rounded details-container">
-                <h1 class="mb-4">
-                    {{ item.name }}
-                </h1>
-                <p>
-                    <strong class="text-muted">
-                        Price: 
-                    </strong> <br>
-                    £{{ item.price }}
-                    <br>
-                    {% if item.discount %}
-
-                    <strong class="text-muted">
-                        Discount: 
-                    </strong> <br>
-                    {{ item.discount }}%
-                    <br>
-                    <strong class="text-muted">
-                        Discounted Price: 
-                    </strong> <br>
-                    £{{ final_price }}
-
+                        <strong class="text-muted">
+                            Discount: 
+                        </strong> <br>
+                        {{ item.discount }}%
+                        <br>
+                        <strong class="text-muted">
+                            Discounted Price: 
+                        </strong> <br>
+                        £{{ final_price }}
+    
+                        {% endif %}
+                    </p>
+        
+                    <p>
+                        <strong class="text-muted">
+                            Seller: 
+                        </strong> <br>
+                        <a href="{% url 'user:user_profile' username=item.created_by.username %}" class="user_profile-link">
+                        {{ item.created_by.username }}
+                        </a>
+                    </p>
+    
+                    <p>
+                        <strong class="text-muted">
+                            Created At: 
+                        </strong> <br>
+                        {{ item.created_at|date:"d M Y" }}
+                    </p>
+        
+                    {% if item.description %}
+                    <p class="text-body" id='description'>
+                        <strong class="text-muted">
+                            Description: 
+                        </strong> <br>
+                        <span id="truncated">{{ item.description|truncatechars:100 }}</span>
+                        {% if item.description|length > 100 %} 
+                            <span id="moreText" style="display:none;">{{ item.description }}</span>
+                            <a href="javascript:void(0);" id="readMoreBtn">Read more</a>
+                        {% else %}
+                            {{ item.description }}
+                        {% endif %}
+                    </p>
                     {% endif %}
-                </p>
-    
-                <p>
-                    <strong class="text-muted">
-                        Seller: 
-                    </strong> <br>
-                    {{ item.created_by.username }}
-                </p>
-
-                <p>
-                    <strong class="text-muted">
-                        Created At: 
-                    </strong> <br>
-                    {{ item.created_at|date:"d M Y" }}
-                </p>
-    
-                {% if item.description %}
-                <p class="text-body">
-                    <strong class="text-muted">
-                        Description: 
-                    </strong> <br>
-                    {{ item.description }}
-                </p>
-                {% endif %}
-    
-                {% if request.user == item.created_by %}
-                    <div class="action-btns">
-                        <a href="{% url 'item:edit' item.id %}" 
-                            class="btn mt-2 item-edit_btn"
-                        >
-                            Edit
+        
+                    {% if request.user == item.created_by %}
+                        <div class="action-btns">
+                            <a href="{% url 'item:edit' item.id %}" 
+                                class="btn mt-2 item-edit_btn"
+                            >
+                                Edit
+                            </a>
+        
+                            <a href="{% url 'item:delete' item.id %}" 
+                                class="btn mt-2 item-delete_btn"
+                            >
+                                Delete
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'communication:new_conversation' item.id %}" 
+                        class="btn mt-4 item-contact_btn">
+                        Contact seller
                         </a>
-    
-                        <a href="{% url 'item:delete' item.id %}" 
-                            class="btn mt-2 item-delete_btn"
-                        >
-                            Delete
-                        </a>
-                    </div>
-                {% else %}
-                    <a href="{% url 'communication:new_conversation' item.id %}" 
-                    class="btn mt-4 item-contact_btn">
-                    Contact seller
-                    </a>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </div>
 

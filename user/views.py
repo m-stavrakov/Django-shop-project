@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.views.generic import DetailView
 
 # Create your views here.
 def signup(request):
@@ -42,18 +43,18 @@ class CustomLoginView(LoginView):
 
 @login_required
 def profile(request, username):
-    user = request.user
     user_profile = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=user_profile)
-    profile_image = user.profile.profile_img.url
-    user_items = Item.objects.filter(created_by=user, is_sold=False)[:6]
+    profile_image = profile.profile_img.url
+    user_items = Item.objects.filter(created_by=user_profile, is_sold=False)[:6]
     categories = Category.objects.all()
 
     return render(request, 'user/profile.html', {
         'profile_image': profile_image,
-        'user_item': user_items,
+        'user_items': user_items,
         'categories': categories,
-        'current_user': user,
+        'current_user': request.user,
+        'user_profile': user_profile,
         'profile': profile,
     })
 
@@ -81,3 +82,11 @@ def profile_update(request):
     }
 
     return render(request, 'user/profile_update.html', context)
+
+class UserProfileView(DetailView):
+    model = User
+    template = 'profile.html'
+    context_object_name = 'user_profile'
+
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs['username'])

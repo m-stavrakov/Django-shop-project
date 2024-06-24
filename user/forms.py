@@ -42,13 +42,21 @@ class SignupForm(UserCreationForm):
     last_name = custom_char_field('Your Last Name')
     username = custom_char_field('Your username')
     email = custom_char_field('Your email address')
-    password1 = custom_char_field('Your password', input_type='password', id='password1')
-    password2 = custom_char_field('Confirm password', input_type='password', id='password2')
+    password1 = forms.CharField(label='Your password', widget=forms.PasswordInput(attrs={'class': 'password-toggle auth_inputs password', 'placeholder': 'Your Password'}))
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput(attrs={'class': 'password-toggle auth_inputs password', 'placeholder': 'Confirm Password'}))
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.pop('autofocus', None)
+        for name, field in self.fields.items():
+            if name == 'profile_picture':
+                field.widget.attrs.update({
+                    'class': 'form-control sign_up-img',
+                })
+            else:
+                field.widget.attrs.pop('autofocus', None)
+                field.widget.attrs.update({
+                    'class': 'form-control password auth_inputs',
+                })
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -61,6 +69,11 @@ class UserUpdateForm(forms.ModelForm):
             'username',
             'email',
         ]
+    
+    first_name = custom_char_field('Your First Name')
+    last_name = custom_char_field('Your Last Name')
+    username = custom_char_field('Your username')
+    email = custom_char_field('Your email address')
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
@@ -73,7 +86,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class LoginForm(AuthenticationForm):
     username = custom_char_field('Your username')
-    password = custom_char_field('Your password', input_type='password', id='password_login')
+    password = forms.CharField(label='Your password', widget=forms.PasswordInput(attrs={'class': 'form-control password auth_inputs', 'placeholder': 'Your Password', 'id': 'password_login'}))
 
     # Allowing user to log in with either username or email
     def clean(self):

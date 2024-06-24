@@ -40,13 +40,13 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item custom-nav-item dropdown profile_img-menu">
-                    <a class="nav-link custom-nav-link profile_img-icon" href="{% url 'profile' user.username %}" id="profile-options" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link custom-nav-link profile_img-icon" href="{% url 'user:profile' user.username %}" id="profile-options" aria-haspopup="true" aria-expanded="false">
                         <div class="profile-img_container">
                             <img src="{{ user.profile.profile_img.url }}" alt="profile picture" class="profile-img rounded-circle">
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-options">
-                        <a href="{% url 'profile' user.username %}" class="dropdown-item profile-drop_menu">
+                        <a href="{% url 'user:profile' user.username %}" class="dropdown-item profile-drop_menu">
                             Profile
                         </a>
                         <a href="{% url 'dashboard:index' %}" class="dropdown-item profile-drop_menu">
@@ -59,7 +59,7 @@
                             Inbox
                         </a>
                         <a href="#" class="dropdown-item profile-drop_menu">
-                            <form method="post" action="{% url 'logout' %}">
+                            <form method="post" action="{% url 'user:logout' %}">
                                 {% csrf_token %}
                                 <button class="logout-btn text-danger" type="submit">Logout</button>
                             </form>
@@ -68,10 +68,10 @@
                 </li>
                 {% else %}
                 <li class="nav-item custom-nav-item">
-                    <a class="nav-link custom-nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link custom-nav-link" href="{% url 'user:login' %}">Login</a>
                   </li>
                   <li class="nav-item custom-nav-item">
-                    <a class="nav-link custom-nav-link" href="{% url 'signup' %}">SignUp</a>
+                    <a class="nav-link custom-nav-link" href="{% url 'user:signup' %}">SignUp</a>
                   </li>
                 {% endif %}
               </ul>
