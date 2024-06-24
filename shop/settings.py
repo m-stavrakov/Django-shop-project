@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # DATABASES = {"default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}  # Loads connection string from DATABASE_URL
-environment = os.environ.get('ENVIRONMENT', 'development')
+environment = os.environ.get('RENDER', 'development')
 
 if environment == 'production':
     database_url = os.environ.get('DATABASE_URL')
